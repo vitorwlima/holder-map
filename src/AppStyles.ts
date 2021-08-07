@@ -7,10 +7,10 @@ export const Container = styled.main`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 2rem;
 
     h1 {
       font-size: 2rem;
-      margin-bottom: 1rem;
     }
   }
 `
