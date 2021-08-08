@@ -17,4 +17,13 @@ export default createGlobalStyle`
   button {
     border: none;
   }
+
+  input {
+    border: none;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
 `
