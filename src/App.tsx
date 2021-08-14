@@ -38,7 +38,7 @@ const App = () => {
         </header>
         <Table assets={assets} />
       </Container>
-      <NewAssetModal isOpen={isOpen} handleClose={handleCloseModal} />
+      <NewAssetModal isOpen={isOpen} handleClose={handleCloseModal} setAssets={setAssets} />
     </>
   )
 }
