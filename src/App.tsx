@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { SnackbarProvider } from 'notistack'
 import { Container } from './AppStyles'
 import { Button, Table, NewAssetModal } from './components'
 import { IAsset } from './interfaces'
@@ -30,7 +31,7 @@ const App = () => {
   }, [])
 
   return (
-    <>
+    <SnackbarProvider>
       <Container>
         <header>
           <h1>Meus ativos</h1>
@@ -39,7 +40,7 @@ const App = () => {
         <Table assets={assets} />
       </Container>
       <NewAssetModal isOpen={isOpen} handleClose={handleCloseModal} setAssets={setAssets} />
-    </>
+    </SnackbarProvider>
   )
 }
 

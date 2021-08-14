@@ -1,3 +1,4 @@
+import { useSnackbar } from 'notistack'
 import React, { useState } from 'react'
 import Modal from 'react-modal'
 import { Button, Input } from '../'
@@ -12,6 +13,7 @@ interface INewAssetModalProps {
 }
 
 export const NewAssetModal = ({ isOpen, handleClose, setAssets }: INewAssetModalProps) => {
+  const { enqueueSnackbar } = useSnackbar()
   const [assetCode, setAssetCode] = useState('')
   const [price, setPrice] = useState(0)
   const [quantity, setQuantity] = useState(0)
@@ -35,9 +37,12 @@ export const NewAssetModal = ({ isOpen, handleClose, setAssets }: INewAssetModal
     try {
       const { data } = await api.post('/asset', { assetCode: assetCode.toUpperCase(), price, quantity })
       setAssets(previousAssets => [...previousAssets, data])
+      enqueueSnackbar('Seu ativo foi criado com sucesso!', { variant: 'success' })
       handleClose()
     } catch (error) {
-      console.log(error)
+      const errorMessage =
+        (error.response && error.response.data && error.response.data.error) || 'Um erro ocorreu. Tente novamente.'
+      enqueueSnackbar(errorMessage, { variant: 'error' })
       handleClose()
     }
   }
