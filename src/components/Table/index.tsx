@@ -27,7 +27,7 @@ export const Table = ({ assets }: ITableProps) => {
               <td>{asset.assetCode}</td>
               <td>R$ {asset.price.toFixed(2)}</td>
               <td>R$ {asset.currentPrice.toFixed(2)}</td>
-              <td>{(asset.profit * 100).toFixed(2)}%</td>
+              <td className={asset.profit >= 0 ? 'profit' : 'loss'}>{(asset.profit * 100).toFixed(2)}%</td>
               <td>{asset.quantity}</td>
               <td>R$ {asset.totalInvested.toFixed(2)}</td>
               <td>R$ {asset.totalValue.toFixed(2)}</td>

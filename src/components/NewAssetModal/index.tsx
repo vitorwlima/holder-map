@@ -15,8 +15,8 @@ interface INewAssetModalProps {
 export const NewAssetModal = ({ isOpen, handleClose, setAssets }: INewAssetModalProps) => {
   const { enqueueSnackbar } = useSnackbar()
   const [assetCode, setAssetCode] = useState('')
-  const [price, setPrice] = useState(0)
-  const [quantity, setQuantity] = useState(0)
+  const [price, setPrice] = useState<number | ''>()
+  const [quantity, setQuantity] = useState<number | ''>()
 
   const customStyles = {
     content: {
@@ -36,6 +36,7 @@ export const NewAssetModal = ({ isOpen, handleClose, setAssets }: INewAssetModal
   const handleAddAsset = async () => {
     try {
       const { data } = await api.post('/asset', { assetCode: assetCode.toUpperCase(), price, quantity })
+
       setAssets(previousAssets => {
         if (!previousAssets.some(item => item.assetCode === assetCode.toUpperCase())) {
           return [...previousAssets, data]
@@ -43,7 +44,13 @@ export const NewAssetModal = ({ isOpen, handleClose, setAssets }: INewAssetModal
 
         return [...previousAssets.filter(item => item.assetCode !== assetCode.toUpperCase()), data]
       })
+
       enqueueSnackbar('Seu ativo foi criado com sucesso!', { variant: 'success' })
+
+      setAssetCode('')
+      setPrice('')
+      setQuantity('')
+
       handleClose()
     } catch (error) {
       const errorMessage =

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { colors } from '../../styles/colors'
 
 export const Container = styled.div`
   table {
@@ -13,6 +14,14 @@ export const Container = styled.div`
     td {
       text-align: center;
       padding: 0.5rem 0;
+    }
+
+    .profit {
+      color: ${colors.secondary};
+    }
+
+    .loss {
+      color: ${colors.warning};
     }
   }
 `
