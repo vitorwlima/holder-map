@@ -36,7 +36,13 @@ export const NewAssetModal = ({ isOpen, handleClose, setAssets }: INewAssetModal
   const handleAddAsset = async () => {
     try {
       const { data } = await api.post('/asset', { assetCode: assetCode.toUpperCase(), price, quantity })
-      setAssets(previousAssets => [...previousAssets, data])
+      setAssets(previousAssets => {
+        if (!previousAssets.some(item => item.assetCode === assetCode.toUpperCase())) {
+          return [...previousAssets, data]
+        }
+
+        return [...previousAssets.filter(item => item.assetCode !== assetCode.toUpperCase()), data]
+      })
       enqueueSnackbar('Seu ativo foi criado com sucesso!', { variant: 'success' })
       handleClose()
     } catch (error) {
