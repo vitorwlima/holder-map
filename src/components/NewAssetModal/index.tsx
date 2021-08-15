@@ -15,8 +15,8 @@ interface INewAssetModalProps {
 export const NewAssetModal = ({ isOpen, handleClose, setAssets }: INewAssetModalProps) => {
   const { enqueueSnackbar } = useSnackbar()
   const [assetCode, setAssetCode] = useState('')
-  const [price, setPrice] = useState<number | ''>()
-  const [quantity, setQuantity] = useState<number | ''>()
+  const [price, setPrice] = useState('')
+  const [quantity, setQuantity] = useState('')
 
   const customStyles = {
     content: {
@@ -35,7 +35,11 @@ export const NewAssetModal = ({ isOpen, handleClose, setAssets }: INewAssetModal
 
   const handleAddAsset = async () => {
     try {
-      const { data } = await api.post('/asset', { assetCode: assetCode.toUpperCase(), price, quantity })
+      const { data } = await api.post('/asset', {
+        assetCode: assetCode.toUpperCase(),
+        price: +price.replace(',', '.'),
+        quantity: +quantity,
+      })
 
       setAssets(previousAssets => {
         if (!previousAssets.some(item => item.assetCode === assetCode.toUpperCase())) {
@@ -72,14 +76,14 @@ export const NewAssetModal = ({ isOpen, handleClose, setAssets }: INewAssetModal
               label='Preço (em reais):'
               type='number'
               value={price}
-              onChange={e => setPrice(+e.target.value)}
+              onChange={e => setPrice(e.target.value)}
             />
             <Input
               nameId='quantity'
               label='Quantidade:'
               type='number'
               value={quantity}
-              onChange={e => setQuantity(+e.target.value)}
+              onChange={e => setQuantity(e.target.value)}
             />
           </div>
         </div>
